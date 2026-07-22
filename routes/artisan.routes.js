@@ -1,41 +1,25 @@
 const express = require ('express');
+const artisanController = require('../controllers/artisan.controller');
 
 const router = express.Router();
 
 // Récupérer tous les artisans
-router.get('/',(req,res)=>{
-    res.json({message: 'Liste des artisans'});
-});
+router.get('/', artisanController.getAllArtisans);
 
-//Récupérer un artisan
-router.get('/:id',(req,res)=>{
-    res.json({
-        message:`Artisan ${req.params.id}`
-    });
-});
+//Récupérer le top des artisans
+router.get('/top', artisanController.getTopArtisans);
+
+//Récupérer un artisan donné
+router.get('/:id', artisanController.getOneArtisan);
 
 //Ajouter un artisan
-router.post('/',(req,res)=>{
-    res.json({
-        message:'Créer un artisan',
-        artisan:req.body
-    });
-});
+router.post('/', artisanController.createArtisan);
 
 //Modifier un artisan
-router.put('/:id',(req,res)=>{
-    res.json({
-        message:`Modifier l'artisan ${req.params.id}`,
-        artisan:req.body
-    });
-});
+router.put('/:id', artisanController.updateArtisan);
 
 //Supprimer un artisan
-router.delete('/:id',(req,res)=>{
-    res.json({
-        message : `Supprimer l'artisan ${req.params.id}`
-    });
-});
+router.delete('/:id', artisanController.deleteArtisan);
 
 module.exports =router;
 
