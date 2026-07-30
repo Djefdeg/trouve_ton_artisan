@@ -1,6 +1,5 @@
 const Artisan = require ("../models/artisan.model");
 
-
 //=====================================================
 //Afficher la liste completes des artisans
 //=====================================================
