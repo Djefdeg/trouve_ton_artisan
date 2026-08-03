@@ -1,5 +1,5 @@
 const express = require('express');
-require("./config/database");
+require("./config/mysqlDb");
 const artisanRoutes = require('./routes/artisan.routes');
 const categoryRoutes = require('./routes/category.routes');
 const cityRoutes = require('./routes/city.routes');

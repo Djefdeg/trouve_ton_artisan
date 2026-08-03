@@ -1,4 +1,4 @@
-const db= require ('../config/database');
+const db= require ('../config/mysqlDb');
 
 exports.getAll = async() => {
     const [rows] = await db.query("SELECT * FROM speciality");
