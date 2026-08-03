@@ -78,7 +78,7 @@ exports.getOneArtisan = async (req, res) => {
 exports.createArtisan = async (req, res) => {
 
     try {
-        const result = await Artisan.create(req.body);
+        const artisan = await Artisan.create(req.body);
         res.status(201).json({
             message: "Un nouvel artisan est ajouté.",
             artisan

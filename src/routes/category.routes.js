@@ -1,6 +1,6 @@
 
 const express = require ('express');
-const categoryController = require('../controllers/category.controller');
+const categoryController = require('../controllers/category.sequelize.controller');
 
 const router = express.Router();
 
