@@ -1,15 +1,15 @@
-const Category = require("../models/category.sequelize.model");
+const City = require("../models/city.sequelize.model");
 
 //=====================================================
-//Afficher la liste completes des catégories
+//Afficher la liste completes des villes
 //=====================================================
-exports.getAllCategories = async (req, res) => {
+exports.getAllCities = async (req, res) => {
      try {
-            const categories = await Category.findAll();
+            const cities = await City.findAll();
     
             res.json({
-                message: "Liste complete des catégories:",
-                categories
+                message: "Liste complete des villes:",
+                cities
             });
     
         } catch (error) {
@@ -21,22 +21,22 @@ exports.getAllCategories = async (req, res) => {
 };
 
 //=====================================================
-//Afficher une catégorie par son id
+//Afficher une ville par son id
 //=====================================================
-exports.getOneCategory = async (req, res) => {
+exports.getOneCity = async (req, res) => {
     try {
         const { id } = req.params;
-        const category = await Category.findByPk(id);
+        const city = await City.findByPk(id);
 
-        if (!category) {
+        if (!city) {
             return res.status(404).json({
-            message: "Catégorie introuvable"
+            message: "Ville introuvable"
                 });
         }
 
         res.json({
-            message: `Catégorie avec l'id ${id}`,
-            category
+            message: `Ville avec l'id ${id}`,
+            city
         });
 
     } catch (error) {
@@ -48,15 +48,15 @@ exports.getOneCategory = async (req, res) => {
 };
 
 //=====================================================
-//Créer une nouvellle catégorie
+//Créer une nouvellle ville
 //=====================================================
-exports.createCategory = async (req, res) => {
+exports.createCity = async (req, res) => {
 
     try {
-        const category = await Category.create(req.body);
+        const city = await City.create(req.body);
         res.status(201).json({
-            message: "Une nouvelle catégorie est ajoutée.",
-            category
+            message: "Une nouvelle ville est ajoutée.",
+            city
         });
     }catch (error) {
         res.status(500).json({
@@ -65,29 +65,28 @@ exports.createCategory = async (req, res) => {
     }
 };
 
-
 //=====================================================
-//Modifier une catégorie par son id
+//Modifier une ville par son id
 //=====================================================
-exports.updateCategory = async (req, res) => {
+exports.updateCity = async (req, res) => {
 
     const { id } = req.params;
 
     try {
 
-        const category = await Category.findByPk(id);
+        const city = await City.findByPk(id);
 
-        if (!category) {
+        if (!city) {
             return res.status(404).json({
-                message: "Catégorie introuvable"
+                message: "Ville introuvable"
             });
         }
 
-        await category.update(req.body);
+        await city.update(req.body);
 
         res.json({
-            message: `La catégorie ${id} est modifiée`,
-            category
+            message: `La ville ${id} est modifiée`,
+            city
         });
 
     } catch (error) {
@@ -100,26 +99,26 @@ exports.updateCategory = async (req, res) => {
 };
 
 //=====================================================
-//Supprimer une catégorie par son id
+//Supprimer une ville par son id
 //=====================================================
-exports.deleteCategory = async (req, res) => {
+exports.deleteCity = async (req, res) => {
 
     const { id } = req.params;
 
     try {
 
-        const category = await Category.findByPk(id);
+        const city = await City.findByPk(id);
 
-        if (!category) {
+        if (!city) {
             return res.status(404).json({
-                message: "Catégorie introuvable"
+                message: "Ville introuvable"
             });
         }
 
-        await category.destroy(id);
+        await city.destroy(id);
 
         res.json({
-            message: `La catégorie ${id} est supprimée`
+            message: `La ville ${id} est supprimée`
         });
 
     } catch (error) {
