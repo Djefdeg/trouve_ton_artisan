@@ -1,23 +1,23 @@
-const Artisan = require ("../models/artisan.model");
+const Artisan = require("../models/artisan.model");
 
 //=====================================================
 //Afficher la liste completes des artisans
 //=====================================================
 exports.getAllArtisans = async (req, res) => {
-    try {
-        const artisans = await Artisan.getAll();
-
-        res.json({
-            message: "Liste complete des artisans:",
-            artisans
-        });
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-    }
+     try {
+            const artisans = await Artisan.findAll();
+    
+            res.json({
+                message: "Liste complete des artisans:",
+                artisans
+            });
+    
+        } catch (error) {
+    
+            res.status(500).json({
+                message: error.message
+            });
+        }
 };
 
 //=====================================================
@@ -25,7 +25,12 @@ exports.getAllArtisans = async (req, res) => {
 //=====================================================
 exports.getTopArtisans = async (req, res) => {
     try {
-        const artisans = await Artisan.getTop();
+        //const artisans = await Artisan.getTop();
+        const artisans = await Artisan.findAll({
+            where: {
+                top: true
+            }
+        });
 
         res.json({
             message: "Liste Top des artisans:",
@@ -46,7 +51,7 @@ exports.getTopArtisans = async (req, res) => {
 exports.getOneArtisan = async (req, res) => {
     try {
         const { id } = req.params;
-        const artisan = await Artisan.getOne(id);
+        const artisan = await Artisan.findByPk(id);
 
         if (!artisan) {
             return res.status(404).json({
@@ -73,10 +78,10 @@ exports.getOneArtisan = async (req, res) => {
 exports.createArtisan = async (req, res) => {
 
     try {
-        const result = await Artisan.create(req.body);
+        const artisan = await Artisan.create(req.body);
         res.status(201).json({
             message: "Un nouvel artisan est ajouté.",
-            id: result.insertId
+            artisan
         });
     }catch (error) {
         res.status(500).json({
@@ -88,51 +93,25 @@ exports.createArtisan = async (req, res) => {
 //=====================================================
 //Modifier un artisan par son id
 //=====================================================
-exports.updateArtisan = async(req, res) => {
+exports.updateArtisan = async (req, res) => {
 
     const { id } = req.params;
 
     try {
-        const result = await Artisan.update(req.body,id);
 
-        if (result.affectedRows === 0) {
+        const artisan = await Artisan.findByPk(id);
+
+        if (!artisan) {
             return res.status(404).json({
-            message: "Artisan introuvable."
+                message: "Artisan introuvable"
             });
         }
 
-        res.status(201).json({
-            message: `l'artisan ${id} est modifié`,
-            affectedRows: result.affectedRows
-        });
-
-    }catch (error) {
-        res.status(500).json({
-            message: error.message
-        });
-    }
-};
-
-//=====================================================
-//Supprimer un artisan par son id
-//=====================================================
-exports.deleteArtisan = async (req, res) => {
-
-    try {
-
-        const { id } = req.params;
-
-        const result = await Artisan.delete(id);
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                message: "Artisan introuvable."
-            });
-        }
+        await artisan.update(req.body);
 
         res.json({
-            message: "Artisan supprimé.",
-            affectedRows: result.affectedRows
+            message: `L'artisan ${id} est modifié`,
+            artisan
         });
 
     } catch (error) {
@@ -142,4 +121,36 @@ exports.deleteArtisan = async (req, res) => {
         });
 
     }
+};
+
+//=====================================================
+//Supprimer un artisan par son id
+//=====================================================
+exports.deleteArtisan = async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const artisan = await Artisan.findByPk(id);
+
+        if (!artisan) {
+            return res.status(404).json({
+                message: "Artisan introuvable"
+            });
+        }
+
+        await artisan.destroy(id);
+
+        res.json({
+            message: `L'artisan ${id} est supprimé`
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+    }
+      
 };

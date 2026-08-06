@@ -1,5 +1,5 @@
 const express = require ('express');
-const artisanController = require('../controllers/artisan.sequelize.controller');
+const artisanController = require('../controllers/artisan.controller');
 
 const router = express.Router();
 

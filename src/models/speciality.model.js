@@ -1,63 +1,31 @@
-const db= require ('../config/mysqlDb');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/dataBase");
 
-exports.getAll = async() => {
-    const [rows] = await db.query("SELECT * FROM speciality");
-    return rows;
-};
+const Speciality = sequelize.define(
+    "Speciality",
+    {
+        id_speciality: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING(100),
+            allowNull: false,
+        },
+        id_category: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'category', // Nom de la table cible
+                key: 'id_category'  // Colonne référencée
+            }
+        },
+    },
+    {
+    tableName: "speciality",
+    timestamps: false
+    }
+);
 
-exports.getOne = async (id) => {
-    const [rows] = await db.query(
-        "SELECT * FROM speciality WHERE id_speciality = ?",
-        [id]
-    );
-    return rows[0];
-};
-
-exports.create = async (speciality) => {
-    const {
-        name,
-        id_category
-    } = speciality;
-    const [result] = await db.query(
-        `INSERT INTO speciality 
-        (name, id_category)
-        VALUES (?, ?)`,
-        [name, id_category]
-    );
-    return result;
-};
-
-exports.update = async (speciality, id) => {
-
-    const {
-        name,
-        id_category
-    } = speciality;
-
-    const [result] = await db.query(
-
-        `UPDATE speciality
-         SET
-            name = ?,
-            id_category = ?
-        
-         WHERE id_speciality = ?`,
-
-        [
-            name,
-            id_category,
-            id
-        ]
-    );
-
-    return result;
-};
-
-exports.delete = async (id) => {
-    const [result] = await db.query(
-        "DELETE FROM speciality WHERE id_speciality = ?",
-        [id]
-    );
-
-    return result;
-};
+module.exports = Speciality;

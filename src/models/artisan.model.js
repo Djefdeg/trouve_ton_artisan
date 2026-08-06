@@ -1,93 +1,57 @@
-const db= require ('../config/mysqlDb');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/dataBase");
 
-exports.getAll = async() => {
-    const [rows] = await db.query("SELECT * FROM artisan");
-    return rows;
-};
+const Artisan = sequelize.define(
+    "Artisan",
+    {
+        id_artisan: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        name: {
+            type: DataTypes.STRING(100),
+            allowNull: false,
+        },
+        mark: {
+            type: DataTypes.DECIMAL(2,1),
+            validate: {min: 0.0, max: 5.0}
+        },
+        about: {
+            type: DataTypes.TEXT
+        },
+        email: {
+            type: DataTypes.STRING(100)
+        },
+        website: {
+            type: DataTypes.STRING(100)
+        },
+        top: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        id_speciality: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'speciality', // Nom de la table cible
+                key: 'id_speciality'  // Colonne référencée
+            }
+        },
+        id_city: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'city', // Nom de la table cible
+                key: 'id_city'  // Colonne référencée
+            }
+        }, 
+    },
+    {
+    tableName: "artisan",
+    timestamps: false
+    }
+);
 
-exports.getTop = async() => {
-    const [rows] = await db.query("SELECT * FROM artisan WHERE top = TRUE");
-    return rows;
-};
-
-exports.getOne = async (id) => {
-    const [rows] = await db.query(
-        "SELECT * FROM artisan WHERE id_artisan = ?",
-        [id]
-    );
-
-    return rows[0];
-};
-
-exports.create = async (artisan) => {
-    const {
-        name,
-        id_speciality,
-        id_city,
-        mark,
-        about,
-        email,
-        website,
-        top
-    } = artisan;
-    const [result] = await db.query(
-        `INSERT INTO artisan 
-        (name, id_speciality, id_city, mark, about, email, website, top)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [name, id_speciality, id_city, mark, about, email, website, top]
-    );
-    return result;
-
-};
-
-exports.update = async (artisan, id) => {
-
-    const {
-        name,
-        id_speciality,
-        id_city,
-        mark,
-        about,
-        email,
-        website,
-        top
-    } = artisan;
-
-    const [result] = await db.query(
-
-        `UPDATE artisan
-         SET
-            name = ?,
-            id_speciality = ?,
-            id_city = ?,
-            mark = ?,
-            about = ?,
-            email = ?,
-            website = ?,
-            top = ?
-         WHERE id_artisan = ?`,
-
-        [
-            name,
-            id_speciality,
-            id_city,
-            mark,
-            about,
-            email,
-            website,
-            top,
-            id
-        ]
-    );
-
-    return result;
-};
-
-exports.delete = async (id) => {
-    const [result] = await db.query(
-        "DELETE FROM artisan WHERE id_artisan = ?",
-        [id]
-    );
-
-    return result;
-};
+module.exports = Artisan;

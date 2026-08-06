@@ -1,6 +1,6 @@
 
 const express = require ('express');
-const cityController = require('../controllers/city.sequelize.controller');
+const cityController = require('../controllers/city.controller');
 
 const router = express.Router();
 
