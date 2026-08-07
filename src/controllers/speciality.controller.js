@@ -1,11 +1,15 @@
-const Speciality = require("../models/speciality.model");
+const {Speciality, Category} = require("../models");
 
 //=====================================================
 //Afficher la liste completes des spécialités
 //=====================================================
 exports.getAllSpecialities = async (req, res) => {
      try {
-            const specialities = await Speciality.findAll();
+            const specialities = await Speciality.findAll({
+                include: [
+                    Category
+                ]
+            });
     
             res.json({
                 message: "Liste complete spécialités:",
@@ -26,7 +30,11 @@ exports.getAllSpecialities = async (req, res) => {
 exports.getOneSpeciality = async (req, res) => {
     try {
         const { id } = req.params;
-        const speciality = await Speciality.findByPk(id);
+        const speciality = await Speciality.findByPk(id,{
+            include: [
+                Category
+            ]
+        });
 
         if (!speciality) {
             return res.status(404).json({

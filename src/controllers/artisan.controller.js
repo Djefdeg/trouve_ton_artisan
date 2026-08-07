@@ -1,11 +1,16 @@
-const Artisan = require("../models/artisan.model");
+const { Artisan, Speciality, City, Category } = require("../models");
 
 //=====================================================
 //Afficher la liste completes des artisans
 //=====================================================
 exports.getAllArtisans = async (req, res) => {
      try {
-            const artisans = await Artisan.findAll();
+            const artisans = await Artisan.findAll({
+                include: [
+                    Speciality,
+                    City
+                ]
+            });
     
             res.json({
                 message: "Liste complete des artisans:",
@@ -29,7 +34,11 @@ exports.getTopArtisans = async (req, res) => {
         const artisans = await Artisan.findAll({
             where: {
                 top: true
-            }
+            },
+            include: [
+                    Speciality,
+                    City
+                ]
         });
 
         res.json({
@@ -51,7 +60,17 @@ exports.getTopArtisans = async (req, res) => {
 exports.getOneArtisan = async (req, res) => {
     try {
         const { id } = req.params;
-        const artisan = await Artisan.findByPk(id);
+        const artisan = await Artisan.findByPk(id,{
+            include: [
+                {
+                    model: Speciality,
+                    include: [
+                        Category
+                    ]
+                },
+                City
+            ]
+        });
 
         if (!artisan) {
             return res.status(404).json({

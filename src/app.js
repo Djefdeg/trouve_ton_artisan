@@ -1,4 +1,5 @@
 const express = require('express');
+require("./models");
 const artisanRoutes = require('./routes/artisan.routes');
 const categoryRoutes = require('./routes/category.routes');
 const cityRoutes = require('./routes/city.routes');
