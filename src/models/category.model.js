@@ -12,6 +12,17 @@ const Category = sequelize.define(
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    msg: "Le nom de la catégorie ne peut pas être vide."
+                },
+                notNull: {
+                    msg: "Le nom de la catégorie est obligatoire."
+                },
+                 set(value) {
+                    this.setDataValue("name", value.trim());
+                }
+            },
         },
     },
     {

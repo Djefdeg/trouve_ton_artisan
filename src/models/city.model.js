@@ -12,6 +12,17 @@ const City = sequelize.define(
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,
+            validate: {
+                notEmpty: {
+                    msg: "Le nom de la ville ne peut pas être vide."
+                },
+                notNull: {
+                    msg: "Le nom de la ville est obligatoire."
+                },
+                 set(value) {
+                    this.setDataValue("name", value.trim());
+                }
+            },
         },
     },
     {
