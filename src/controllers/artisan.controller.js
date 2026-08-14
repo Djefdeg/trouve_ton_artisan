@@ -1,4 +1,5 @@
 const { Artisan, Speciality, City, Category } = require("../models");
+const { ValidationError } = require("sequelize");
 
 //=====================================================
 //Afficher la liste completes des artisans
@@ -13,14 +14,14 @@ exports.getAllArtisans = async (req, res) => {
             });
     
             res.json({
-                message: "Liste complete des artisans:",
+                message: "Liste des artisans récupérée avec succès.",
                 artisans
             });
     
         } catch (error) {
     
             res.status(500).json({
-                message: error.message
+                message: "Une erreur interne est survenue lors de la récupération des artisans."
             });
         }
 };
@@ -42,14 +43,14 @@ exports.getTopArtisans = async (req, res) => {
         });
 
         res.json({
-            message: "Liste Top des artisans:",
+            message: "Liste Top des artisans récupérée avec succès.",
             artisans
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des artisans."
         });
     }
 };
@@ -79,14 +80,14 @@ exports.getOneArtisan = async (req, res) => {
         }
 
         res.json({
-            message: `Artisan avec l'id ${id}`,
+            message: `Artisan récupéré avec succès.`,
             artisan
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des artisans."
         });
     }
 };
@@ -99,12 +100,19 @@ exports.createArtisan = async (req, res) => {
     try {
         const artisan = await Artisan.create(req.body);
         res.status(201).json({
-            message: "Un nouvel artisan est ajouté.",
+            message: "Artisan créé avec succès.",
             artisan
         });
     }catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de l'artisan sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
+
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la création de l'artisan."
         });
     }
 };
@@ -129,14 +137,19 @@ exports.updateArtisan = async (req, res) => {
         await artisan.update(req.body);
 
         res.json({
-            message: `L'artisan ${id} est modifié`,
+            message: `Artisan modifié avec succès.`,
             artisan
         });
 
     } catch (error) {
-
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de l'artisan sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la modification de l'artisan."
         });
 
     }
@@ -159,16 +172,15 @@ exports.deleteArtisan = async (req, res) => {
             });
         }
 
-        await artisan.destroy(id);
+        await artisan.destroy();
 
         res.json({
-            message: `L'artisan ${id} est supprimé`
+            message: `Artisan supprimé avec succès.`
         });
 
     } catch (error) {
-
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la suppression de l'artisan."
         });
     }
       

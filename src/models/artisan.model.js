@@ -25,8 +25,17 @@ const Artisan = sequelize.define(
             }
         },
         mark: {
-            type: DataTypes.DECIMAL(2,1),
-            validate: {min: 0.0, max: 5.0}
+        type: DataTypes.DECIMAL(2, 1),
+            validate: {
+                min: {
+                    args: [0.0],
+                    msg: "La note de l'artisan doit être supérieure ou égale à 0."
+                },
+                max: {
+                    args: [5.0],
+                    msg: "La note de l'artisan doit être inférieure ou égale à 5."
+                }
+            }
         },
         about: {
             type: DataTypes.TEXT

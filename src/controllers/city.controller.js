@@ -1,4 +1,5 @@
 const City = require("../models/city.model");
+const { ValidationError } = require("sequelize");
 
 //=====================================================
 //Afficher la liste completes des villes
@@ -8,14 +9,14 @@ exports.getAllCities = async (req, res) => {
             const cities = await City.findAll();
     
             res.json({
-                message: "Liste complete des villes:",
+                message: "Liste des villes récupérée avec succès.:",
                 cities
             });
     
         } catch (error) {
     
             res.status(500).json({
-                message: error.message
+                message: "Une erreur interne est survenue lors de la récupération des spécialités."
             });
         }
 };
@@ -35,14 +36,14 @@ exports.getOneCity = async (req, res) => {
         }
 
         res.json({
-            message: `Ville avec l'id ${id}`,
+            message: `Ville récupérée avec succès.`,
             city
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
 };
@@ -55,12 +56,19 @@ exports.createCity = async (req, res) => {
     try {
         const city = await City.create(req.body);
         res.status(201).json({
-            message: "Une nouvelle ville est ajoutée.",
+            message: "Ville créée avec succès.",
             city
         });
     }catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la ville sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
+
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
 };
@@ -85,14 +93,19 @@ exports.updateCity = async (req, res) => {
         await city.update(req.body);
 
         res.json({
-            message: `La ville ${id} est modifiée`,
+            message: `Ville modifiée avec succès.`,
             city
         });
 
     } catch (error) {
-
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la ville sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
 
     }
@@ -118,13 +131,13 @@ exports.deleteCity = async (req, res) => {
         await city.destroy(id);
 
         res.json({
-            message: `La ville ${id} est supprimée`
+            message: `Ville supprimée avec succès.`
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
       

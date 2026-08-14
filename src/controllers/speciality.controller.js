@@ -1,4 +1,5 @@
 const {Speciality, Category} = require("../models");
+const { ValidationError } = require("sequelize");
 
 //=====================================================
 //Afficher la liste completes des spécialités
@@ -12,14 +13,14 @@ exports.getAllSpecialities = async (req, res) => {
             });
     
             res.json({
-                message: "Liste complete spécialités:",
+                message: "Liste des spécialités récupérée avec succès.",
                 specialities
             });
     
         } catch (error) {
     
             res.status(500).json({
-                message: error.message
+                message: "Une erreur interne est survenue lors de la récupération des spécialités."
             });
         }
 };
@@ -43,14 +44,14 @@ exports.getOneSpeciality = async (req, res) => {
         }
 
         res.json({
-            message: `Spécialité avec l'id ${id}`,
+            message: `Spécialité récupérée avec succès.`,
             speciality
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
 };
@@ -63,12 +64,19 @@ exports.createSpeciality = async (req, res) => {
     try {
         const speciality = await Speciality.create(req.body);
         res.status(201).json({
-            message: "Une nouvelle spécialité est ajoutée.",
+            message: "Spécialité créée avec succès.",
             speciality
         });
     }catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la spécialité sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
+
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la création de la spécialité."
         });
     }
 };
@@ -93,16 +101,22 @@ exports.updateSpeciality = async (req, res) => {
         await speciality.update(req.body);
 
         res.json({
-            message: `La spécialité ${id} est modifiée`,
+            message: `Spécialité modifiée avec succès.`,
             speciality
         });
 
     } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la spécialité sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la modificaation de la spécialité."
         });
-
+        
     }
 };
 
@@ -126,13 +140,12 @@ exports.deleteSpeciality = async (req, res) => {
         await speciality.destroy(id);
 
         res.json({
-            message: `La spécialité ${id} est supprimé`
+            message: `Ville supprimée avec succès.`
         });
 
     } catch (error) {
-
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la suppression de la spécialité."
         });
     }
       

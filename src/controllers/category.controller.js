@@ -1,4 +1,5 @@
 const Category = require("../models/category.model");
+const { ValidationError } = require("sequelize");
 
 //=====================================================
 //Afficher la liste completes des catégories
@@ -8,14 +9,14 @@ exports.getAllCategories = async (req, res) => {
             const categories = await Category.findAll();
     
             res.json({
-                message: "Liste complete des catégories:",
+                message: "Liste des catégories récupérée avec succès.",
                 categories
             });
     
         } catch (error) {
     
             res.status(500).json({
-                message: error.message
+                message: "Une erreur interne est survenue lors de la récupération des spécialités."
             });
         }
 };
@@ -35,14 +36,14 @@ exports.getOneCategory = async (req, res) => {
         }
 
         res.json({
-            message: `Catégorie avec l'id ${id}`,
+            message: `Catégorie récupérée avec succès.`,
             category
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
 };
@@ -55,12 +56,18 @@ exports.createCategory = async (req, res) => {
     try {
         const category = await Category.create(req.body);
         res.status(201).json({
-            message: "Une nouvelle catégorie est ajoutée.",
+            message: "Catégorie créée avec succès.",
             category
         });
     }catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la catégorie sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
 };
@@ -86,14 +93,19 @@ exports.updateCategory = async (req, res) => {
         await category.update(req.body);
 
         res.json({
-            message: `La catégorie ${id} est modifiée`,
+            message: `Catégorie modifiée avec succès.`,
             category
         });
 
     } catch (error) {
-
+        if (error instanceof ValidationError) {
+            return res.status(400).json({
+                message: "Les données de la catégorie sont invalides.",
+                errors: error.errors.map(err => err.message)
+            });
+        }
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
 
     }
@@ -119,13 +131,13 @@ exports.deleteCategory = async (req, res) => {
         await category.destroy(id);
 
         res.json({
-            message: `La catégorie ${id} est supprimée`
+            message: `Catégorie supprimée avec succès.`
         });
 
     } catch (error) {
 
         res.status(500).json({
-            message: error.message
+            message: "Une erreur interne est survenue lors de la récupération des spécialités."
         });
     }
       
