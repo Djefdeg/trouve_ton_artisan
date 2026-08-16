@@ -24,6 +24,10 @@ const Artisan = sequelize.define(
                 this.setDataValue("name", value.trim());
             }
         },
+        logo: {
+            type: DataTypes.STRING(255),
+            allowNull: true
+        },
         mark: {
         type: DataTypes.DECIMAL(2, 1),
             validate: {

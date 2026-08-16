@@ -24,6 +24,10 @@ const Speciality = sequelize.define(
                 }
             },
         },
+        avatar: {
+            type: DataTypes.STRING(255),
+            allowNull: true
+        },
         id_category: {
             type: DataTypes.INTEGER,
             allowNull: false,

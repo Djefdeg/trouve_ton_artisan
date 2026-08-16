@@ -18,7 +18,6 @@ exports.getAllSpecialities = async (req, res) => {
             });
     
         } catch (error) {
-    
             res.status(500).json({
                 message: "Une erreur interne est survenue lors de la récupération des spécialités."
             });
