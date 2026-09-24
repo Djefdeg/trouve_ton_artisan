@@ -1,6 +1,9 @@
 @use 'sass:color';
-@use '../../styles/variables';
+@use '../../styles/variables' as *;
 
+.navbar {
+  font-family: 'Graphik', sans-serif;
+}
 
 .navbar form input {
   width: 300px;

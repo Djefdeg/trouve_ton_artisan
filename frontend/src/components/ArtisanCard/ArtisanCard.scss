@@ -1,0 +1,28 @@
+@use '../../styles/variables' as *;
+
+.artisan-card {
+  width: 320px;
+  height: 340px;
+  border: 1px solid $color-dark-blue;
+  text-align: center;
+  font-family: 'Graphik', sans-serif;
+}
+
+.artisan-card-image {
+  height: 200px;
+}
+
+.artisan-card-info {
+  height: 117px;
+  text-align: center;
+  line-height: 1;
+}
+
+.artisan-card-info h3 {
+  color: $color-dark-blue;
+}
+
+.rating{
+  color: $color-primary;
+}
+
