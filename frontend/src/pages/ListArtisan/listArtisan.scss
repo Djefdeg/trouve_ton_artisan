@@ -1,0 +1,54 @@
+@use 'sass:color';
+@use '../../styles/variables' as *;
+
+.list_artisan {
+  background-color: $color-background;
+  padding:32px;
+  padding-bottom: 16px;
+  font-family: 'Graphik', sans-serif;
+}
+.title{
+  background-color: #fff;
+  text-align: center;
+  padding-bottom: 16px;
+  padding-top: 16px;
+}
+
+.search {
+  margin-top:32px;
+  padding-top: 32px;
+  background-color: #fff;
+}
+
+.searchAndFilter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+#speciality {
+    width: 400px;
+    height: 32px;
+}
+
+#city{
+    width:400px;
+    height: 32px;
+}
+
+.resultCount p{
+    text-align: center;
+    padding-bottom: 32px;
+}
+
+.artisanResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  background-color: #fff;
+  padding-bottom: 32px;
+  padding-top: 32px;
+}
