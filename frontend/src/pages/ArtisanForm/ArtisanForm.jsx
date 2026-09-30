@@ -47,7 +47,7 @@ function App() {
                             aria-label="Rechercher un artisan"/>
                             <input className="form-control me-2 mt-1" placeholder="Objet" 
                             aria-label="Objet"/>
-                            <textarea className="form-control me-2 mt-1" name="" id="" placeholder="Votre message" rows="3"></textarea>
+                            <textarea className="form-control me-2 mt-1" name="" id="" placeholder="Votre message" rows="6"></textarea>
                         
                             <div class="d-flex justify-content-center mt-2">
                                 <button className="btn btn-outline-primary" type="submit"> Envoyer ✉️</button>

@@ -1,0 +1,37 @@
+@use 'sass:color';
+@use '../../styles/variables' as *;
+
+.errorSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  align-items: center; 
+}
+
+.error-image{
+    width: 350px;
+}
+
+.explanation{
+    width: 350px;
+    background-color:#fff;
+    text-align: center;
+}
+
+.explanation h1 {
+  color: $color-primary;
+}
+
+.explanation h2, .explanation p {
+  color: $color-dark-blue;
+}
+
+.errorSection{
+    background-color: #fff;
+}
+.error404 {
+  background-color: $color-background;
+  font-family: 'Graphik', sans-serif;
+  padding:32px 32px;
+}
