@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const cors = require('cors');
 require("./models");
 const artisanRoutes = require('./routes/artisan.routes');
 const categoryRoutes = require('./routes/category.routes');
@@ -6,7 +8,9 @@ const cityRoutes = require('./routes/city.routes');
 const specialityRoutes = require('./routes/speciality.routes');
 
 const app = express();
+app.use(cors());
 
+app.use('/images', express.static(path.join(__dirname, '../../database/images')));
 //MIDDLEWARES
 
 //Décoder les requetes en JSON

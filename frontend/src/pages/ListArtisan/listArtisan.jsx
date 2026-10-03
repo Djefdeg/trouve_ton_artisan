@@ -1,7 +1,19 @@
 import ArtisanCard from '../../components/ArtisanCard/ArtisanCard'
+import { getArtisans } from '../../services/api';
+import { useEffect, useState } from 'react';
 import './listArtisan.scss';
 
 function App() {
+
+  const [artisans, setArtisans] = useState([]);
+
+  useEffect(() => {
+  getArtisans().then(data => {
+    setArtisans(data.artisans);
+    console.log(data.artisans);
+  });
+  }, []);
+
   return (
     <div className='list_artisan'>
 
@@ -30,15 +42,16 @@ function App() {
           </div>
         </div>
         <div className='resultCount'>
-          <p>04 artisans trouvés</p>
+          {/* <p>04 artisans trouvés</p> */}
+          <p>{artisans.length} artisans trouvés</p>
         </div>
       </div>
 
       <div className='artisanResults'>
+        <ArtisanCard artisan={{ name: 'Traiteur Truchon' }} />
+        {/* <ArtisanCard />
         <ArtisanCard />
-        <ArtisanCard />
-        <ArtisanCard />
-        <ArtisanCard />
+        <ArtisanCard /> */}
       </div>
     </div>
     )

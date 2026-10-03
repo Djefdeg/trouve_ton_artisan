@@ -1,7 +1,7 @@
 import './ArtisanCard.scss';
 import ImgProfil from './../../assets/logo_traiteur.jpg';
 
-function ArtisanCard() {
+function ArtisanCard({ artisan }) {
   return (
     <article className="artisan-card">
       <div className="artisan-card-image">
@@ -11,7 +11,7 @@ function ArtisanCard() {
 
       <div className="artisan-card-info">
         {/* Informations de l'artisan */}
-        <h3>Traiteur Truchon</h3>
+        <h3>{artisan.name}</h3>
         <p className="rating">3 / 5 ★★★★★</p>
         <p>Traiteur</p>
         <p>Lyon</p>
