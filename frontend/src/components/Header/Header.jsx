@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Header.scss';
 import Logo from '../../assets/Logo-dropped.png';
 
@@ -6,9 +7,9 @@ function Header() {
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
 
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <img className="navbar-logo" src={Logo} alt="Trouve ton artisan" />
-        </a>
+        </Link>
 
         <button
           className="navbar-toggler"

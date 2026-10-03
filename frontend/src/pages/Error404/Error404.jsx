@@ -8,7 +8,7 @@ function App() {
         <div className='image'>
           <img className="error-image" src={Img404} alt="Image de route barrée" />
         </div>
-        <div className='explanation'>
+        <div className='error-explanation'>
           <h1>404</h1>
           <h2>Page introuvable</h2>
           <p>La page que vous recherchez n'existe pas ou a été deplacée</p>
