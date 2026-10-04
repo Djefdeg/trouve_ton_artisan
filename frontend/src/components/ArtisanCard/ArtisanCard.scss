@@ -10,12 +10,15 @@
 
 .artisan-card-image {
   height: 200px;
+  max-width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px;
 }
 
 .artisan-card-info {
   height: 117px;
   text-align: center;
-  line-height: 1;
+  line-height: 0.6;
 }
 
 .artisan-card-info h3 {

@@ -48,7 +48,10 @@ function App() {
       </div>
 
       <div className='artisanResults'>
-        <ArtisanCard artisan={{ name: 'Traiteur Truchon' }} />
+        {/* {artisans[0] && <ArtisanCard artisan={artisans[0]} />} */}
+        {artisans.map(artisan => (
+          <ArtisanCard key={artisan.id_artisan} artisan={artisan} />
+        ))}
         {/* <ArtisanCard />
         <ArtisanCard />
         <ArtisanCard /> */}
