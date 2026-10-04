@@ -6,6 +6,12 @@ export const getArtisans = async () => {
   return response.json();
 };
 
+export const getTopArtisans = async () => {
+  const response = await fetch(`${API_URL}/artisans/top`);
+
+  return response.json();
+};
+
 export const getSpecialities = async () => {
   const response = await fetch(`${API_URL}/specialities`);
 

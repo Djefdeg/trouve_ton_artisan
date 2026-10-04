@@ -1,7 +1,18 @@
-import ArtisanCard from '../../components/ArtisanCard/ArtisanCard'
+import { useEffect, useState } from 'react';
+import ArtisanCard from '../../components/ArtisanCard/ArtisanCard';
+import { getTopArtisans } from '../../services/api';
+
 import './Home.scss';
 
 function App() {
+  const [topArtisans, setTopArtisans] = useState([]);
+
+  useEffect(() => {
+    getTopArtisans().then(data => {
+      setTopArtisans(data.artisans);
+    });
+  }, []);
+
   return (
     <div className='home'>
       <section className="explanation ">
@@ -16,9 +27,9 @@ function App() {
       <section className="cards">
         <h2>Les artisans du mois</h2>
         <div className="artisan-cards">
-          <ArtisanCard />
-          <ArtisanCard />
-          <ArtisanCard />
+            {topArtisans.map(artisan => (
+              <ArtisanCard key={artisan.id_artisan} artisan={artisan} />
+            ))}
         </div>
       </section>
 
