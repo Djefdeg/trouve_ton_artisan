@@ -1,18 +1,42 @@
 import ArtisanCard from '../../components/ArtisanCard/ArtisanCard'
-import { getArtisans } from '../../services/api';
+import { getArtisans, getSpecialities, getCities } from '../../services/api';
 import { useEffect, useState } from 'react';
 import './listArtisan.scss';
 
 function App() {
 
   const [artisans, setArtisans] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
+  const [selectedSpeciality, setSelectedSpeciality] = useState('');
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
-  getArtisans().then(data => {
-    setArtisans(data.artisans);
-    console.log(data.artisans);
-  });
+    getArtisans().then(data => {
+      setArtisans(data.artisans);
+    });
+
+    getSpecialities().then(data => {
+      setSpecialities(data.specialities);
+    });
+
+    getCities().then(data => {
+      setCities(data.cities);
+    });
+
   }, []);
+
+  const filteredArtisans = artisans.filter(artisan => {
+    const matchesSpeciality = selectedSpeciality
+      ? artisan.id_speciality === Number(selectedSpeciality)
+      : true;
+
+    const matchesCity = selectedCity
+      ? artisan.id_city === Number(selectedCity)
+      : true;
+
+    return matchesSpeciality && matchesCity;
+  });
 
   return (
     <div className='list_artisan'>
@@ -24,21 +48,32 @@ function App() {
       <div className='search'>
         <div className='searchAndFilter'>
           <div>
-            <select id="speciality">
-              <option value="specialities">Toutes les spécialités</option>
-              <option value="boulanger">Boulanger</option>
-              <option value="coiffeur">Coiffeur</option>
-              <option value="traiteur">Traiteur</option>
+            <select
+                    id="speciality"
+                    value={selectedSpeciality}
+                    onChange={(event) => setSelectedSpeciality(event.target.value)}
+                  >
+              <option value="">Toutes les spécialités</option>
+              {specialities.map(speciality => (
+                <option key={speciality.id_speciality} value={speciality.id_speciality}>
+                  {speciality.name}
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            <select id="city">
-              <option value="Cities">Toutes les villes</option>
-              <option value="lyon">Lyon</option>
-              <option value="evian">Evian</option>
-              <option value="vienne">Vienne</option>
+            <select
+                    id="city"
+                    value={selectedCity}
+                    onChange={(event) => setSelectedCity(event.target.value)}
+                  >
+              <option value="">Toutes les villes</option>
+              {cities.map(city => (
+                <option key={city.id_city} value={city.id_city}>
+                  {city.name}
+                </option>
+              ))}
             </select>
-
           </div>
         </div>
         <div className='resultCount'>
@@ -49,7 +84,7 @@ function App() {
 
       <div className='artisanResults'>
         {/* {artisans[0] && <ArtisanCard artisan={artisans[0]} />} */}
-        {artisans.map(artisan => (
+        {filteredArtisans.map(artisan => (
           <ArtisanCard key={artisan.id_artisan} artisan={artisan} />
         ))}
         {/* <ArtisanCard />
