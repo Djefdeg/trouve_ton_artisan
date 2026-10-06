@@ -17,20 +17,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/artisans" element={<ListArtisan />} />
-        <Route path="/contact" element={<ArtisanForm />} />
+        <Route path="/contact/:id" element={<ArtisanForm />} />
         <Route path="/mentions-legales" element={<LegalNotice />} />
         <Route path="/accessibilite" element={<Accessibility />} />
         <Route path="/cookies" element={<Cookies />} />
         <Route path="/donnees-personnelles" element={<PersonalData />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
-      {/* <ListArtisan /> */}
-      {/* <ArtisanForm /> */}
-      {/* < Error404 /> */}
-      {/* <LegalNotice/> */}
-      {/* <Accessibility/> */}
-      {/* <Cookies/> */}
-      {/* <PersonalData/> */}
       <Footer />
     </BrowserRouter>
     
