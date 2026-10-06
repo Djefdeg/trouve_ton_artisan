@@ -1,7 +1,9 @@
 import './Error404.scss';
 import Img404 from './../../assets/Error404.jpg';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
   return (
     <div className='error404'>
       <section className='errorSection p-4'>
@@ -12,7 +14,9 @@ function App() {
           <h1>404</h1>
           <h2>Page introuvable</h2>
           <p>La page que vous recherchez n'existe pas ou a été deplacée</p>
-          <button className="btn btn-outline-primary"> Retour à l'accueil </button>
+          <button className="btn btn-outline-primary" onClick={() => navigate('/')}>
+            Retour à l'accueil
+          </button>
         </div>
       </section>
     
