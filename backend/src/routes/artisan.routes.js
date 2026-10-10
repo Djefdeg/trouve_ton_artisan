@@ -3,6 +3,9 @@ const artisanController = require('../controllers/artisan.controller');
 
 const router = express.Router();
 
+//Envoyer un message a un artisan
+router.post('/:id/contact', artisanController.sendContactEmail);
+
 // Récupérer tous les artisans
 router.get('/', artisanController.getAllArtisans);
 

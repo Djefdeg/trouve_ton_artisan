@@ -1,5 +1,15 @@
 const { Artisan, Speciality, City, Category } = require("../models");
 const { ValidationError } = require("sequelize");
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
 
 //=====================================================
 //Afficher la liste completes des artisans
@@ -184,4 +194,50 @@ exports.deleteArtisan = async (req, res) => {
         });
     }
       
+};
+
+//=====================================================
+//Envoyer un message à un artisan
+//=====================================================
+exports.sendContactEmail = async (req, res) => {
+
+    const { id } = req.params;
+    const { name, email, subject, message } = req.body;
+
+    const artisan = await Artisan.findByPk(id);
+
+    if (!artisan) {
+        return res.status(404).json({
+            message: "Artisan introuvable"
+        });
+    }
+
+    if (!name || !email || !subject || !message) {
+        return res.status(400).json({
+            message: "Tous les champs sont obligatoires."
+        });
+    }
+
+    try {
+        await transporter.sendMail({
+            //from: process.env.EMAIL_USER,
+            from: 'onboarding@resend.dev',
+            to: artisan.email,
+            replyTo: email,
+            subject: subject,
+            text: `Message de ${name}\n\n${message}`
+        });
+
+        return res.status(200).json({
+            message: "Votre message a été envoyé avec succès."
+        });
+
+    } catch (error) {
+        console.error("Erreur lors de l'envoi du mail :", error);
+
+        return res.status(500).json({
+            message: "Une erreur est survenue lors de l'envoi du message."
+        });
+    }
+
 };
