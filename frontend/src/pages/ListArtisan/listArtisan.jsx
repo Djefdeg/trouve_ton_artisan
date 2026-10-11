@@ -1,9 +1,14 @@
 import ArtisanCard from '../../components/ArtisanCard/ArtisanCard'
 import { getArtisans, getSpecialities, getCities } from '../../services/api';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './listArtisan.scss';
 
 function App() {
+
+  const [searchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('category') || '';
+  const searchTerm = searchParams.get('search') || '';
 
   const [artisans, setArtisans] = useState([]);
   const [specialities, setSpecialities] = useState([]);
@@ -27,15 +32,26 @@ function App() {
   }, []);
 
   const filteredArtisans = artisans.filter(artisan => {
+
+    const matchesCategory = selectedCategory 
+      ? artisan.Speciality.id_category === Number(selectedCategory) 
+      : true;
+
     const matchesSpeciality = selectedSpeciality
-      ? artisan.id_speciality === Number(selectedSpeciality)
+      ? artisan.id_speciality === Number(selectedSpeciality) 
       : true;
 
     const matchesCity = selectedCity
       ? artisan.id_city === Number(selectedCity)
       : true;
+  
+    const matchesSearch = searchTerm
+      ? artisan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        artisan.Speciality.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        artisan.City.name.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
 
-    return matchesSpeciality && matchesCity;
+    return matchesCategory && matchesSpeciality && matchesCity && matchesSearch;
   });
 
   return (
@@ -77,19 +93,14 @@ function App() {
           </div>
         </div>
         <div className='resultCount'>
-          {/* <p>04 artisans trouvés</p> */}
-          <p>{artisans.length} artisans trouvés</p>
+          <p>{filteredArtisans.length} artisans trouvés</p>
         </div>
       </div>
 
       <div className='artisanResults'>
-        {/* {artisans[0] && <ArtisanCard artisan={artisans[0]} />} */}
         {filteredArtisans.map(artisan => (
           <ArtisanCard key={artisan.id_artisan} artisan={artisan} />
         ))}
-        {/* <ArtisanCard />
-        <ArtisanCard />
-        <ArtisanCard /> */}
       </div>
     </div>
     )

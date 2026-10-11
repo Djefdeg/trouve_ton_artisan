@@ -30,4 +30,10 @@ export const getCities = async () => {
   return response.json();
 };
 
+export const getCategories = async () => {
+   const response = await fetch(`${API_URL}/categories`);
+
+ return response.json();
+};
+
 export default API_URL;
