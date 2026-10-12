@@ -17,7 +17,7 @@ VALUES
 -- =====================================================
 -- Table : speciality
 -- =====================================================
-INSERT INTO speciality (name, id_category)
+INSERT INTO speciality (name, avatar, id_category)
 VALUES
 ('Boucher','images/avatars/boucher.png',1),
 ('Boulanger','images/avatars/boulanger.png',1),
@@ -58,7 +58,7 @@ VALUES
 -- =====================================================
 -- Table : artisan
 -- =====================================================
-INSERT INTO artisan (name, mark, about, email, website, top, id_speciality, id_city)
+INSERT INTO artisan (name, logo, mark, about, email, website, top, id_speciality, id_city)
 VALUES
 ('Boucherie Dumont',NULL , 4.5, 'Lorem ipsum dolor sit amet,...', 'boucherie.dumond@gmail.com', NULL, FALSE, 1, 1),
 ('Au pain chaud', 'images/logos/boulanger.jpg',4.8, 'Lorem ipsum dolor sit amet,...', 'aupainchaud@hotmail.com', NULL, TRUE, 2, 2),
