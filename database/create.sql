@@ -5,12 +5,12 @@
 -- =====================================================
 
 -- Création de la base de données
-DROP DATABASE IF EXISTS trouve_ton_artisan;
+-- DROP DATABASE IF EXISTS trouve_ton_artisan;
 
-CREATE DATABASE trouve_ton_artisan;
+-- CREATE DATABASE trouve_ton_artisan;
 
 -- Sélection de la base de données
-USE trouve_ton_artisan;
+-- USE trouve_ton_artisan;
 
 -- =====================================================
 -- Table : category
