@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { API_URL } from '../../services/api';
 import './ArtisanCard.scss';
 
 function ArtisanCard({ artisan }) {
 
   const imageUrl = artisan.logo
-  ? `http://localhost:3000/${artisan.logo}`
-  : `http://localhost:3000/${artisan.Speciality.avatar}`;
+  ? `${API_URL}/${artisan.logo}`
+  : `${API_URL}/${artisan.Speciality.avatar}`;
 
   return (
     <Link
