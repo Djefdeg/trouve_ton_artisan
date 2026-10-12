@@ -61,7 +61,7 @@ VALUES
 INSERT INTO artisan (name, logo, mark, about, email, website, top, id_speciality, id_city)
 VALUES
 ('Boucherie Dumont',NULL , 4.5, 'Lorem ipsum dolor sit amet,...', 'boucherie.dumond@gmail.com', NULL, FALSE, 1, 1),
-('Au pain chaud', 'images/logos/boulanger.jpg',4.8, 'Lorem ipsum dolor sit amet,...', 'aupainchaud@hotmail.com', NULL, TRUE, 2, 2),
+('Au pain chaud', 'images/logos/logo_boulanger.jpg',4.8, 'Lorem ipsum dolor sit amet,...', 'aupainchaud@hotmail.com', NULL, TRUE, 2, 2),
 ('Chocolaterie Labbé','images/logos/logo_chocolatier.jpg', 4.9, 'Lorem ipsum dolor sit amet,...', 'chocolaterie-labbe@gmail.com', 'https://chocolaterie-labbe.fr', TRUE, 3, 1),
 ('Traiteur Truchon','images/logos/logo_traiteur.jpg', 4.1, 'Lorem ipsum dolor sit amet,...', 'contact@truchon-traiteur.fr', 'https://truchon-traiteur.fr', FALSE, 4, 1),
 ('Orville Salmons',NULL, 5.0, 'Lorem ipsum dolor sit amet,...', 'o-salmons@live.com', NULL, TRUE, 5, 3),
