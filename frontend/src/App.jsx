@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
@@ -12,21 +13,22 @@ import PersonalData from './pages/UnderConstruction/PersonalData';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/artisans" element={<ListArtisan />} />
-        <Route path="/contact/:id" element={<ArtisanForm />} />
-        <Route path="/mentions-legales" element={<LegalNotice />} />
-        <Route path="/accessibilite" element={<Accessibility />} />
-        <Route path="/cookies" element={<Cookies />} />
-        <Route path="/donnees-personnelles" element={<PersonalData />} />
-        <Route path="*" element={<Error404 />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-    
+    <HelmetProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/artisans" element={<ListArtisan />} />
+          <Route path="/contact/:id" element={<ArtisanForm />} />
+          <Route path="/mentions-legales" element={<LegalNotice />} />
+          <Route path="/accessibilite" element={<Accessibility />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/donnees-personnelles" element={<PersonalData />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </HelmetProvider>
   )
 }
 

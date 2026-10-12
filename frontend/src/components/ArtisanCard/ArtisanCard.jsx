@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './ArtisanCard.scss';
 
 function ArtisanCard({ artisan }) {
@@ -7,7 +8,10 @@ function ArtisanCard({ artisan }) {
   : `http://localhost:3000/${artisan.Speciality.avatar}`;
 
   return (
-    <article className="artisan-card">
+    <Link
+      to={`/contact/${artisan.id_artisan}`}
+      className="artisan-card"
+    >
       <div className="artisan-card-image">
         {/* Logo de l'artisan */}
         <img
@@ -20,11 +24,14 @@ function ArtisanCard({ artisan }) {
       <div className="artisan-card-info">
         {/* Informations de l'artisan */}
         <h3>{artisan.name}</h3>
-        <p className="rating">{artisan.mark} / 5 ★★★★★</p>
+        <p className="rating">
+          {artisan.mark} / 5 {'★'.repeat(Math.round(artisan.mark))}
+          {'☆'.repeat(5 - Math.round(artisan.mark))}
+        </p>
         <p>{artisan.Speciality.name}</p>
         <p>{artisan.City.name}</p>
       </div>
-    </article>
+    </Link>
 
   );
 }

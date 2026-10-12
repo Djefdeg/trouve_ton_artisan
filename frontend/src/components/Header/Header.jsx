@@ -59,30 +59,17 @@ function Header() {
           </form>
 
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/artisans?category=2">
-                Bâtiment
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/artisans?category=4">
-                Services
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/artisans?category=3">
-                Fabrication
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link" to="/artisans?category=1">
-                Alimentation
-              </Link>
-            </li>
-
+            
+            {categories.slice(0, 4).map(category => (
+              <li className="nav-item" key={category.id_category}>
+                <Link
+                  className="nav-link"
+                  to={`/artisans?category=${category.id_category}`}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
