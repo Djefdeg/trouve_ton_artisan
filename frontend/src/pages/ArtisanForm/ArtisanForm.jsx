@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import { getArtisan } from '../../services/api';
+import { API_URL } from '../../services/api';
 import './ArtisanForm.scss';
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
         event.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:3000/artisans/${id}/contact`, {
+            const response = await fetch(`${API_URL}/artisans/${id}/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,10 +91,10 @@ function App() {
     if (!artisan) {
     return <p>Artisan introuvable.</p>;
     }
-
-  const imageUrl = artisan.logo
-  ? `http://localhost:3000/${artisan.logo}`
-  : `http://localhost:3000/${artisan.Speciality.avatar}`;
+    
+    const imageUrl = artisan.logo
+    ? `${API_URL}/${artisan.logo}`
+    : `${API_URL}/${artisan.Speciality.avatar}`;
 
   return (
         <>
